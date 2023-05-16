@@ -12,14 +12,14 @@ return new class extends Migration {
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-
-            $table->bigIncrements('idProductos');
+            $table->increments('id');
+            
+            $table->integer('idcategoria')->unsigned();
             $table->string('nombre', 100);
             $table->string('cantidad', 100);
             $table->decimal('precioCompra', 25, 2);
             $table->decimal('precioVenta', 25, 2);
-            $table->unsignedBigInteger('fk_idCategoria');
-            $table->foreign('fk_idproductos')->references('idCategoria')->on('categoria');
+            $table->foreign('idcategoria')->references('id')->on('categorias');
             $table->timestamps();
         });
     }

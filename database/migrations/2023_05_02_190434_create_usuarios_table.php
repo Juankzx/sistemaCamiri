@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-
-            $table->bigIncrements('idUsuarios');
+            $table->increments('id');
+            
+            $table->integer('idgrupoUsuario')->unsigned();
             $table->string('nombre', 100);
             $table->string('nombreUsuario', 100);
             $table->string('contraseña', 100);
             $table->integer('nivelUsuario');
-            $table->integer('estado');
+            $table->integer('estado')->default(1);
+            $table->foreign('idgrupoUsuario')->references('id')->on('grupoUsuarios');
             $table->timestamps();
         });
     }

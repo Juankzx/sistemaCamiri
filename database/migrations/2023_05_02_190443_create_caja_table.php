@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('caja', function (Blueprint $table) {
             $table->engine = 'InnoDB';
+            $table->increments('id');
 
-            $table->bigIncrements('idCaja');
+            $table->integer('idusuario')->unsigned();
             $table->dateTime('fecha');
             $table->string('estadoCaja', 10);
             $table->integer('totalCaja');
             $table->string('observacion', 300);
+            $table->foreign('idusuario')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }
