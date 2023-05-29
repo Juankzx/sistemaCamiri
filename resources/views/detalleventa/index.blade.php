@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    Detalle Ventum
+    Detalleventa
 @endsection
 
 @section('content')
@@ -13,12 +13,12 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Detalle Ventum') }}
+                                {{ __('Detalle de la venta') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('detalle-venta.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                <a href="{{ route('detalleventas.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Crear Nuevo') }}
                                 </a>
                               </div>
                         </div>
@@ -36,7 +36,7 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Idproducto</th>
+										<th>Producto</th>
 										<th>Idventa</th>
 										<th>Cantidad</th>
 										<th>Precio</th>
@@ -45,22 +45,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($detalleVenta as $detalleVentum)
+                                    @foreach ($detalleventas as $detalleventa)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $detalleVentum->idproducto }}</td>
-											<td>{{ $detalleVentum->idventa }}</td>
-											<td>{{ $detalleVentum->cantidad }}</td>
-											<td>{{ $detalleVentum->precio }}</td>
+											<td>{{ $detalleventa->idproducto }}</td>
+											<td>{{ $detalleventa->idventa }}</td>
+											<td>{{ $detalleventa->cantidad }}</td>
+											<td>{{ $detalleventa->precio }}</td>
 
                                             <td>
-                                                <form action="{{ route('detalle-venta.destroy',$detalleVentum->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('detalle-venta.show',$detalleVentum->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('detalle-venta.edit',$detalleVentum->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('detalleventas.destroy',$detalleventa->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('detalleventas.show',$detalleventa->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('detalleventas.edit',$detalleventa->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $detalleVenta->links() !!}
+                {!! $detalleventas->links() !!}
             </div>
         </div>
     </div>

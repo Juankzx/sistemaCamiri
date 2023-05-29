@@ -321,7 +321,7 @@ return [
 
         [
             'text' => 'Nueva Venta',
-            'url' => '/',
+            'url' => 'detalleventas',
             'icon' => 'fas fa-shopping-cart',
         ],
 

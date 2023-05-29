@@ -23,7 +23,7 @@ Auth::routes();
 Route::resource('productos', App\Http\Controllers\ProductoController::class)->middleware('auth');
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 Route::resource('ventas', App\Http\Controllers\VentaController::class)->middleware('auth');
-Route::resource('detalleVentas', App\Http\Controllers\DetalleVentumController::class)->middleware('auth');
+Route::resource('detalleventas', App\Http\Controllers\DetalleventaController::class)->middleware('auth');
 Route::resource('usuarios', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('grupousuarios', App\Http\Controllers\GrupoUsuarioController::class)->middleware('auth');
 

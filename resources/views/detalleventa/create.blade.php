@@ -1,26 +1,25 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('template_title')
-    {{ __('Update') }} Detalle Ventum
+    {{ __('Create') }} Detalleventa
 @endsection
 
 @section('content')
     <section class="content container-fluid">
-        <div class="">
+        <div class="row">
             <div class="col-md-12">
 
                 @includeif('partials.errors')
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Update') }} Detalle Ventum</span>
+                        <span class="card-title">{{ __('Crear') }} Detalle de la venta</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('detalle-venta.update', $detalleVentum->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
+                        <form method="POST" action="{{ route('detalleventas.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('detalle-ventum.form')
+                            @include('detalleventa.form')
 
                         </form>
                     </div>
