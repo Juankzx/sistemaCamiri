@@ -38,9 +38,9 @@ class Venta extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function detalleventas()
+    public function productos()
     {
-        return $this->hasMany('App\Models\Detalleventum', 'idventa', 'id');
+        return $this->hasMany("App\Models\ProductoVendido", "id_venta");
     }
     
 

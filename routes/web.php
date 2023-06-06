@@ -26,6 +26,7 @@ Route::resource('ventas', App\Http\Controllers\VentaController::class)->middlewa
 Route::resource('detalleventas', App\Http\Controllers\DetalleventaController::class)->middleware('auth');
 Route::resource('usuarios', App\Http\Controllers\UsuarioController::class)->middleware('auth');
 Route::resource('grupousuarios', App\Http\Controllers\GrupoUsuarioController::class)->middleware('auth');
+Route::resource('vender', App\Http\Controllers\VenderController::class)->middleware('auth');
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
