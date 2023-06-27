@@ -24,32 +24,38 @@ class VentaController extends Controller
 }
 
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'producto_id' => 'required|exists:productos,id',
-            'user_id' => 'required|exists:users,id',
-            'cantidad' => 'required|integer|min:1',
-            'precio' => 'required|numeric|min:0',
-            'metodo_pago' => 'required|string',
-            'fecha' => 'required|date',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'producto_id' => 'required|exists:productos,id',
+        'user_id' => 'required|exists:users,id',
+        'cantidad' => 'required|integer|min:1',
+        'precio' => 'required|numeric|min:0',
+        'metodo_pago' => 'required|string',
+        'fecha' => 'required|date',
+    ]);
 
-        $venta = new Venta();
-        $venta->producto_id = $request->producto_id;
-        $venta->user_id = $request->user_id;
-        $venta->cantidad = $request->cantidad;
-        $venta->precio = $request->precio;
-        $venta->metodo_pago = $request->metodo_pago;
-        $venta->fecha = $request->fecha;
-        $venta->save();
+    $producto = Producto::findOrFail($request->producto_id);
 
-        // Actualizar la cantidad de productos restantes
-        $producto = Producto::find($request->producto_id);
-        $producto->cantidad -= $request->cantidad;
-        $producto->save();
-
-        return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
+    if ($request->cantidad > $producto->cantidad) {
+        // La cantidad solicitada excede el stock disponible
+        return redirect()->back()->with('error', 'La cantidad solicitada excede el stock disponible.');
     }
+
+    $venta = new Venta();
+    $venta->producto_id = $request->producto_id;
+    $venta->user_id = $request->user_id;
+    $venta->cantidad = $request->cantidad;
+    $venta->precio = $request->precio;
+    $venta->metodo_pago = $request->metodo_pago;
+    $venta->fecha = $request->fecha;
+    $venta->save();
+
+    // Actualizar el stock del producto
+    $producto->cantidad -= $request->cantidad;
+    $producto->save();
+
+    return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
+}
 }
 
