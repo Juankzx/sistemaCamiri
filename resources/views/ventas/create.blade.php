@@ -13,6 +13,7 @@
         <div class="form-group">
             <label for="producto_id">Producto</label>
             <select name="producto_id" id="producto_id" class="form-control">
+                <option value="">Selecciona un producto</option>
                 @foreach ($productos as $producto)
                     <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
                 @endforeach
@@ -52,3 +53,18 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 @endsection
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script>
+        @if ($errors->any())
+            window.addEventListener('DOMContentLoaded', () => {
+                const errorMessage = '{{ $errors->first() }}';
+                alert(errorMessage);
+            });
+        @endif
+    </script>
+@stop

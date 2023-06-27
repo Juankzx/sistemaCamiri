@@ -1,11 +1,14 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\Producto;
 use App\Models\User;
+
 
 class VentaController extends Controller
 {
@@ -26,19 +29,29 @@ class VentaController extends Controller
 
 public function store(Request $request)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'producto_id' => 'required|exists:productos,id',
         'user_id' => 'required|exists:users,id',
         'cantidad' => 'required|integer|min:1',
         'precio' => 'required|numeric|min:0',
         'metodo_pago' => 'required|string',
         'fecha' => 'required|date',
+    ], [], [
+        'producto_id' => 'ID del producto',
+        'user_id' => 'ID del usuario',
+        'cantidad' => 'cantidad',
+        'precio' => 'precio',
+        'metodo_pago' => 'método de pago',
+        'fecha' => 'fecha',
     ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
 
     $producto = Producto::findOrFail($request->producto_id);
 
     if ($request->cantidad > $producto->cantidad) {
-        // La cantidad solicitada excede el stock disponible
         return redirect()->back()->with('error', 'La cantidad solicitada excede el stock disponible.');
     }
 
@@ -51,11 +64,11 @@ public function store(Request $request)
     $venta->fecha = $request->fecha;
     $venta->save();
 
-    // Actualizar el stock del producto
     $producto->cantidad -= $request->cantidad;
     $producto->save();
 
     return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
 }
 }
+
 
