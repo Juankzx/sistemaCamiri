@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Producto
  *
  * @property $id
- * @property $idcategoria
+ * @property $categoria_id
  * @property $nombre
  * @property $cantidad
  * @property $precioCompra
@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property $updated_at
  *
  * @property Categoria $categoria
- * @property Detalleventum[] $detalleventas
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
@@ -25,7 +24,7 @@ class Producto extends Model
 {
     
     static $rules = [
-		'idcategoria' => 'required',
+		'categoria_id' => 'required',
 		'nombre' => 'required',
 		'cantidad' => 'required',
 		'precioCompra' => 'required',
@@ -39,24 +38,34 @@ class Producto extends Model
      *
      * @var array
      */
-    protected $fillable = ['idcategoria','nombre','cantidad','precioCompra','precioVenta'];
+    protected $fillable = ['categoria_id','nombre','cantidad','precioCompra','precioVenta'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+
+     protected $appends = ['ganancia','stockMinimo'];
+
+     public function getGananciaAttribute()
+     {
+         return $this->precioVenta - $this->precioCompra;
+     }
+
+
+     public function getstockMinimoAttribute()
+     {
+         return $this->stockMinimo=10;
+     }
+ 
     public function categoria()
     {
-        return $this->hasOne('App\Models\Categoria', 'id', 'idcategoria');
+        return $this->hasOne('App\Models\Categoria', 'id', 'categoria_id');
     }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function detalleventas()
-    {
-        return $this->hasMany('App\Models\Detalleventum', 'idproducto', 'id');
-    }
     
 
 }

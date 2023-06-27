@@ -2,32 +2,32 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('idcategoria') }}
-            {{ Form::select('idcategoria', $categorias, $producto->idcategoria, ['class' => 'form-control' . ($errors->has('idcategoria') ? ' is-invalid' : ''), 'placeholder' => 'Idcategoria']) }}
-            {!! $errors->first('idcategoria', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('categoria_id') }}
+            {{ Form::select('categoria_id', $categorias, $producto->categoria_id, ['class' => 'form-control' . ($errors->has('categoria_id') ? ' is-invalid' : ''), 'placeholder' => 'Selecciona la categoria']) }}
+            {!! $errors->first('categoria_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
         <div class="form-group">
             {{ Form::label('nombre') }}
-            {{ Form::text('nombre', $producto->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
+            {{ Form::text('nombre', $producto->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Escribe el nombre']) }}
             {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
         <div class="form-group">
             {{ Form::label('cantidad') }}
-            {{ Form::text('cantidad', $producto->cantidad, ['class' => 'form-control' . ($errors->has('cantidad') ? ' is-invalid' : ''), 'placeholder' => 'Cantidad']) }}
+            {{ Form::text('cantidad', $producto->cantidad, ['class' => 'form-control' . ($errors->has('cantidad') ? ' is-invalid' : ''), 'placeholder' => 'Ingresa la cantidad']) }}
             {!! $errors->first('cantidad', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
         <div class="form-group">
             {{ Form::label('precioCompra') }}
-            {{ Form::text('precioCompra', $producto->precioCompra, ['class' => 'form-control' . ($errors->has('precioCompra') ? ' is-invalid' : ''), 'placeholder' => 'Preciocompra']) }}
+            {{ Form::text('precioCompra', $producto->precioCompra, ['class' => 'form-control' . ($errors->has('precioCompra') ? ' is-invalid' : ''), 'placeholder' => 'Ingresa el precio de compra']) }}
             {!! $errors->first('precioCompra', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
         <div class="form-group">
             {{ Form::label('precioVenta') }}
-            {{ Form::text('precioVenta', $producto->precioVenta, ['class' => 'form-control' . ($errors->has('precioVenta') ? ' is-invalid' : ''), 'placeholder' => 'Precioventa']) }}
+            {{ Form::text('precioVenta', $producto->precioVenta, ['class' => 'form-control' . ($errors->has('precioVenta') ? ' is-invalid' : ''), 'placeholder' => 'Ingresa el precio de venta']) }}
             {!! $errors->first('precioVenta', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 

@@ -2,108 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Venta;
 use Illuminate\Http\Request;
+use App\Models\Venta;
+use App\Models\Producto;
+use App\Models\User;
 
-/**
- * Class VentaController
- * @package App\Http\Controllers
- */
 class VentaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $ventas = Venta::paginate();
-
-        return view('venta.index', compact('ventas'))
-            ->with('i', (request()->input('page', 1) - 1) * $ventas->perPage());
+        $ventas = Venta::all();
+        return view('ventas.index', compact('ventas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
-    {
-        $venta = new Venta();
-        return view('venta.create', compact('venta'));
-    }
+{
+    $productos = Producto::all();
+    $users = User::all(); // Obtener todos los usuarios
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    return view('ventas.create', compact('productos', 'users'));
+}
+
+
     public function store(Request $request)
     {
-        request()->validate(Venta::$rules);
+        $request->validate([
+            'producto_id' => 'required|exists:productos,id',
+            'user_id' => 'required|exists:users,id',
+            'cantidad' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:0',
+            'metodo_pago' => 'required|string',
+            'fecha' => 'required|date',
+        ]);
 
-        $venta = Venta::create($request->all());
+        $venta = new Venta();
+        $venta->producto_id = $request->producto_id;
+        $venta->user_id = $request->user_id;
+        $venta->cantidad = $request->cantidad;
+        $venta->precio = $request->precio;
+        $venta->metodo_pago = $request->metodo_pago;
+        $venta->fecha = $request->fecha;
+        $venta->save();
 
-        return redirect()->route('ventas.index')
-            ->with('success', 'Venta created successfully.');
-    }
+        // Actualizar la cantidad de productos restantes
+        $producto = Producto::find($request->producto_id);
+        $producto->cantidad -= $request->cantidad;
+        $producto->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $venta = Venta::find($id);
-
-        return view('venta.show', compact('venta'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $venta = Venta::find($id);
-
-        return view('venta.edit', compact('venta'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Venta $venta
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Venta $venta)
-    {
-        request()->validate(Venta::$rules);
-
-        $venta->update($request->all());
-
-        return redirect()->route('ventas.index')
-            ->with('success', 'Venta updated successfully');
-    }
-
-    /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy($id)
-    {
-        $venta = Venta::find($id)->delete();
-
-        return redirect()->route('ventas.index')
-            ->with('success', 'Venta deleted successfully');
+        return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
     }
 }
+

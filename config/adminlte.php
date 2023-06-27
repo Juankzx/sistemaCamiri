@@ -321,7 +321,7 @@ return [
 
         [
             'text' => 'Nueva Venta',
-            'url' => 'detalleventas',
+            'url' => 'ventas/create',
             'icon' => 'fas fa-shopping-cart',
         ],
 
@@ -343,7 +343,7 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'url' => 'usuarios',
+            'url' => 'users',
             'icon' => 'fas fa-user',
         ],
 

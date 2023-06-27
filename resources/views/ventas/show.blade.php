@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('template_title')
-    {{ $grupoUsuario->name ?? "{{ __('Show') Grupo Usuario" }}
+    {{ $venta->name ?? "{{ __('Ver') Venta" }}
 @endsection
 
 @section('content')
@@ -11,28 +11,23 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Grupo Usuario</span>
+                            <span class="card-title">{{ __('Ver') }} Venta</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('grupo-usuarios.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('ventas.index') }}"> {{ __('< Volver') }}</a>
                         </div>
                     </div>
 
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <strong>Gruponombre:</strong>
-                            {{ $grupoUsuario->grupoNombre }}
+                            <strong>Fecha:</strong>
+                            {{ $venta->fecha }}
                         </div>
                         <div class="form-group">
-                            <strong>Gruponivel:</strong>
-                            {{ $grupoUsuario->grupoNivel }}
+                            <strong>Metodopago:</strong>
+                            {{ $venta->metodoPago }}
                         </div>
-                        <div class="form-group">
-                            <strong>Grupoestado:</strong>
-                            {{ $grupoUsuario->grupoEstado }}
-                        </div>
-
                     </div>
                 </div>
             </div>

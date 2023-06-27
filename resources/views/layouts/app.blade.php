@@ -49,7 +49,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('usuarios.index') }}">{{ __('Usuarios') }}</a>
+                            <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
                         </li>
                        
                         
@@ -82,7 +82,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Salir') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

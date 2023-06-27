@@ -23,10 +23,8 @@ Auth::routes();
 Route::resource('productos', App\Http\Controllers\ProductoController::class)->middleware('auth');
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 Route::resource('ventas', App\Http\Controllers\VentaController::class)->middleware('auth');
-Route::resource('detalleventas', App\Http\Controllers\DetalleventaController::class)->middleware('auth');
-Route::resource('usuarios', App\Http\Controllers\UsuarioController::class)->middleware('auth');
-Route::resource('grupousuarios', App\Http\Controllers\GrupoUsuarioController::class)->middleware('auth');
-Route::resource('vender', App\Http\Controllers\VenderController::class)->middleware('auth');
+Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -2,46 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Class Venta
- *
- * @property $id
- * @property $fecha
- * @property $metodoPago
- * @property $created_at
- * @property $updated_at
- *
- * @property Detalleventum[] $detalleventas
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
 class Venta extends Model
 {
-    
-    static $rules = [
-		'fecha' => 'required',
-		'metodoPago' => 'required',
+    use HasFactory;
+
+    protected $fillable = [
+        'producto_id',
+        'user_id',
+        'cantidad',
+        'precio',
+        'metodo_pago',
+        'fecha'
     ];
 
-    protected $perPage = 20;
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['fecha','metodoPago'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function productos()
+    public function producto()
     {
-        return $this->hasMany("App\Models\ProductoVendido", "id_venta");
+        return $this->belongsTo(Producto::class);
     }
-    
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
