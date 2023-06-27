@@ -39,12 +39,16 @@
                             
                         </div>
                         <div class="form-group">
-                            <strong>Preciocompra:</strong>
+                            <strong>Precio compra:</strong>
                             {{ $producto->precioCompra }}
                         </div>
                         <div class="form-group">
-                            <strong>Precioventa:</strong>
+                            <strong>Precio venta:</strong>
                             {{ $producto->precioVenta }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Estado:</strong>
+                            <span class="right badge badge-{{ $producto->estado ? 'success' : 'danger' }}">{{$producto->estado ? 'Activo' : 'Inactivo'}}</span>
                         </div>
 
                     </div>

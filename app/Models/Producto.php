@@ -29,6 +29,7 @@ class Producto extends Model
 		'cantidad' => 'required',
 		'precioCompra' => 'required',
 		'precioVenta' => 'required',
+        'estado' => 'estado'
     ];
 
     protected $perPage = 20;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\Venta;
 use Illuminate\Http\Request;
 
 /**
@@ -25,7 +26,7 @@ class ProductoController extends Controller
         return view('producto.index', compact('productos'))
             ->with('i', (request()->input('page', 1) - 1) * $productos->perPage());
 
-        $productos = Producto::findOrFail($id);
+        $producto = Producto::findOrFail($id);
         $stockMinimo = $productos->stock_minimo;
     }
 
@@ -92,13 +93,20 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        request()->validate(Producto::$rules);
+        
+        $producto->categoria_id = $request->categoria_id;
+        $producto->nombre = $request->nombre;
+        $producto->cantidad = $request->cantidad;
+        $producto->precioCompra = $request->precioCompra;
+        $producto->precioVenta = $request->precioVenta;
+        $producto->estado = $request->estado;
 
-        $producto->update($request->all());
-
-        return redirect()->route('productos.index')
-            ->with('Exito', 'Producto actualizado exitosamente');
+        if (!$producto->save()) {
+            return redirect()->back()->with('error', 'Disculpa, hay\'un problema mientras se actualiza el producto.');
+        }
+        return redirect()->route('productos.index')->with('Exito', 'Exito, su producto a sido actualizado.');
     }
+    
 
     /**
      * @param int $id

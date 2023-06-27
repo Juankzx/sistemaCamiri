@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('cantidad', 100);
             $table->decimal('precioCompra', 25, 2);
             $table->decimal('precioVenta', 25, 2);
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

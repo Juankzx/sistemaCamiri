@@ -30,6 +30,18 @@
             {{ Form::text('precioVenta', $producto->precioVenta, ['class' => 'form-control' . ($errors->has('precioVenta') ? ' is-invalid' : ''), 'placeholder' => 'Ingresa el precio de venta']) }}
             {!! $errors->first('precioVenta', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select name="estado" class="form-control @error('estado') is-invalid @enderror" id="estado">
+                <option value="1" {{ old('estado') === 1 ? 'selected' : ''}}>Activo</option>
+                <option value="0" {{ old('estado') === 0 ? 'selected' : ''}}>Inactivo</option>
+            </select>
+            @error('estado')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
 
     </div>
     <div class="box-footer mt20">

@@ -42,6 +42,7 @@
 										<th>PRECIO COMPRA</th>
 										<th>PRECIO VENTA</th>
                                         <th>GANANCIA</th>
+                                        <th>ESTADO</th>
 
                                         <th></th>
                                     </tr>
@@ -58,6 +59,10 @@
 											<td>{{ $producto->precioCompra }}</td>
 											<td>{{ $producto->precioVenta }}</td>
                                             <td>{{ $producto->ganancia }}</td>
+                                            <td>
+                                                <span
+                                                    class="right badge badge-{{ $producto->estado ? 'success' : 'danger' }}">{{$producto->estado ? 'Activo' : 'Inactivo'}}</span>
+                                            </td>
 
                                             <td>
                                                 <form action="{{ route('productos.destroy',$producto->id) }}" method="POST">
