@@ -318,13 +318,7 @@ return [
             'label' => 5,
             'label_color' => 'success',
         ],
-
-        [
-            'text' => 'Nueva Venta',
-            'url' => 'ventas/create',
-            'icon' => 'fas fa-shopping-cart',
-        ],
-
+        
         [
             'text' => 'Productos',
             'url' => 'productos',
@@ -345,6 +339,11 @@ return [
             'text' => 'Usuarios',
             'url' => 'users',
             'icon' => 'fas fa-user',
+        ],
+        [
+            'text' => 'Proveedores',
+            'url' => 'proveedores',
+            'icon' => 'fas fa-users',
         ],
 
     ],

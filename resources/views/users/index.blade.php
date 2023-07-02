@@ -5,9 +5,20 @@
 @endsection
 
 @section('content')
-    <h1>Lista de Usuarios</h1>
+<div class="card-header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
 
-    <a href="{{ route('users.create') }}" class="btn btn-success mb-3">Crear Usuario</a>
+        <span id="card_title">
+            <h1>Listado de Usuarios</h1>
+        </span>
+
+         <div class="float-right">
+            <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+              {{ __('+ AGREGAR') }}
+            </a>
+          </div>
+    </div>
+</div>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -31,7 +42,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-edit"></i></a>
                         <!-- Agrega aquí el botón para eliminar -->
                     </td>
                 </tr>
@@ -39,3 +50,11 @@
         </tbody>
     </table>
 @endsection
+
+@section('css')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop

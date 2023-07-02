@@ -29,6 +29,19 @@
                 @endforeach
             </select>
         </div>
+        
+
+        <div class="form-group">
+            <label for="proveedor_id">Proveedor</label>
+            <select name="proveedor_id" id="proveedor_id" class="form-control" required>
+                <option value="">Seleccione un proveedor</option>
+                @if(isset($proveedores))
+                @foreach ($proveedores as $proveedor)
+                <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                @endforeach
+                @endif
+            </select>
+        </div>
 
         <div class="form-group">
             <label for="cantidad">Cantidad</label>
@@ -45,18 +58,9 @@
             <input type="text" name="metodo_pago" id="metodo_pago" class="form-control" required>
         </div>
 
-        <div class="form-group">
-            <label for="fecha">Fecha</label>
-            <input type="date" name="fecha" id="fecha" class="form-control" required>
-        </div>
-
         <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
 @endsection
-
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
 
 @section('js')
     <script>
@@ -68,3 +72,11 @@
         @endif
     </script>
 @stop
+@section('css')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop
+

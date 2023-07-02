@@ -41,7 +41,7 @@
 										<th>STOCK</th>
 										<th>PRECIO COMPRA</th>
 										<th>PRECIO VENTA</th>
-                                        <th>GANANCIA</th>
+                                        <th>UTILIDAD UNITARIA</th>
                                         <th>ESTADO</th>
 
                                         <th></th>

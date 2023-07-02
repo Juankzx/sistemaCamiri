@@ -24,6 +24,12 @@ Route::resource('productos', App\Http\Controllers\ProductoController::class)->mi
 Route::resource('categorias', App\Http\Controllers\CategoriaController::class)->middleware('auth');
 Route::resource('ventas', App\Http\Controllers\VentaController::class)->middleware('auth');
 Route::resource('users', App\Http\Controllers\UserController::class)->middleware('auth');
+Route::resource('proveedores', App\Http\Controllers\ProveedorController::class)->middleware('auth');
+
+Route::get('/ventas/{id}/exportar-pdf', 'App\Http\Controllers\VentaController@exportarPDF')->name('ventas.exportar.pdf');
+
+
+
 
 
 

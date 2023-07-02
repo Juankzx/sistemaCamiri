@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('template_title')
-    {{ $producto->name ?? "{{ __('Ver') Producto" }}
+    Producto
 @endsection
 
 @section('content')
@@ -57,3 +57,10 @@
         </div>
     </section>
 @endsection
+@section('css')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+@stop

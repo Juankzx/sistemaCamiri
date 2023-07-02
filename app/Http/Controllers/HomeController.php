@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producto;
+use App\Models\Proveedor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cantidadProductos = Producto::count();
+        return view('home', compact('cantidadProductos'));
+
     }
 }

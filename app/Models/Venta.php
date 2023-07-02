@@ -12,10 +12,10 @@ class Venta extends Model
     protected $fillable = [
         'producto_id',
         'user_id',
+        'proveedor_id',
         'cantidad',
         'precio',
         'metodo_pago',
-        'fecha'
     ];
 
     public function producto()
@@ -26,5 +26,10 @@ class Venta extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class);
     }
 }

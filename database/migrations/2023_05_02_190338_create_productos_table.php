@@ -16,7 +16,7 @@ return new class extends Migration {
             
             $table->foreignId('categoria_id')->nullable()->constrained('categorias');
             $table->string('nombre', 100);
-            $table->string('cantidad', 100);
+            $table->string('cantidad')->default(0);
             $table->decimal('precioCompra', 25, 2);
             $table->decimal('precioVenta', 25, 2);
             $table->boolean('estado')->default(true);
