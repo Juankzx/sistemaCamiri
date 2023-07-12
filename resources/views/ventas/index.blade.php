@@ -30,13 +30,10 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Producto</th>
-                <th>Usuario</th>
-                <th>Proveedor</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Método de Pago</th>
                 <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Total</th>
+               
                 
             </tr>
         </thead>
@@ -44,18 +41,16 @@
             @foreach ($ventas as $venta)
                 <tr>
                     <td>{{ $venta->id }}</td>
-                    <td>{{ $venta->producto->nombre }}</td>
-                    <td>{{ $venta->user->name }}</td>
-                    <td>{{ $venta->proveedor->nombre }}</td>
-                    <td>{{ $venta->cantidad }}</td>
-                    <td>{{ $venta->precio }}</td>
-                    <td>{{ $venta->metodo_pago }}</td>
                     <td>{{ $venta->created_at }}</td>
-                    <td>
-                        <a href="{{ route('ventas.exportar.pdf', ['id' => $venta->id]) }}" class="btn btn-primary" target="_blank">
-                            <i class="fas fa-file-pdf"></i></a>
-                    </td>
-
+                    <td>{{ $venta->proveedor->nombre }}</td>
+                    <td>${{ $venta->precio }}</td>
+                    
+                        <td>
+                                <a class="btn btn-sm btn-primary" href="{{ route('ventas.show',$venta->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __() }}</a>
+                                <a class="btn btn-sm btn-secondary" href="{{ route('ventas.exportar.pdf', ['id' => $venta->id]) }}" class="btn btn-primary" target="_blank">
+                                    <i class="fas fa-file-pdf"></i></a>
+                        </td>
+                
                 </tr>
             @endforeach
         </tbody>
@@ -68,3 +63,4 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 @stop
+

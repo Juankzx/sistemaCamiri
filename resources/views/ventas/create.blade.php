@@ -15,7 +15,7 @@
             <select name="producto_id" id="producto_id" class="form-control">
                 <option value="">Selecciona un producto</option>
                 @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->nombre }}</option>
+                    <option value="{{ $producto->id }}" data-precio="{{ $producto->precioventa }}">{{ $producto->nombre }}</option>
                 @endforeach
             </select>
         </div>
@@ -50,7 +50,7 @@
 
         <div class="form-group">
             <label for="precio">Precio</label>
-            <input type="number" name="precio" id="precio" class="form-control" required>
+            <input type="number" name="precioVenta" id="precioVenta" class="form-control" required readonly>
         </div>
 
         <div class="form-group">
@@ -64,14 +64,22 @@
 
 @section('js')
     <script>
-        @if ($errors->any())
-            window.addEventListener('DOMContentLoaded', () => {
-                const errorMessage = '{{ $errors->first() }}';
-                alert(errorMessage);
-            });
-        @endif
+        // Obtener el elemento select del producto y el input del precio
+        const productoSelect = document.getElementById('producto_id');
+        const precioInput = document.getElementById('precioVenta');
+
+        // Escuchar el evento change en el select del producto
+        productoSelect.addEventListener('change', function() {
+            // Obtener el precio del producto seleccionado
+            const selectedOption = this.options[this.selectedIndex];
+            const precioVenta = selectedOption.getAttribute('data-precio');
+
+            // Establecer el precio en el input correspondiente
+            precioInput.value = precioVenta;
+        });
     </script>
-@stop
+@endsection
+
 @section('css')
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 @stop
@@ -79,4 +87,3 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 @stop
-

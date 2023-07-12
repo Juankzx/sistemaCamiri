@@ -56,9 +56,9 @@
                                             <td>{{ $producto->nombre }}</td>
                                             <td>{{ $producto->categoria->nombre }}</td>
 											<td>{{ $producto->cantidad }}</td>
-											<td>{{ $producto->precioCompra }}</td>
-											<td>{{ $producto->precioVenta }}</td>
-                                            <td>{{ $producto->ganancia }}</td>
+											<td>${{ $producto->precioCompra }}</td>
+											<td>${{ $producto->precioVenta }}</td>
+                                            <td>${{ $producto->ganancia }}</td>
                                             <td>
                                                 <span
                                                     class="right badge badge-{{ $producto->estado ? 'success' : 'danger' }}">{{$producto->estado ? 'Activo' : 'Inactivo'}}</span>

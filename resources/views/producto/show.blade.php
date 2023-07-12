@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="float-left">
-                            <span class="card-title">{{ __('Ver') }} Producto</span>
+                            <span class="card-title">{{ __('Ver') }} Producto #{{ ($producto->id) }}</span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('productos.index') }}"> {{ __('< Volver') }}</a>

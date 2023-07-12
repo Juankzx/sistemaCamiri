@@ -61,7 +61,7 @@ class VentaController extends Controller
         $venta->user_id = $request->user_id;
         $venta->proveedor_id = $request->proveedor_id;
         $venta->cantidad = $request->cantidad;
-        $venta->precio = $request->precio;
+        $venta->precio = $producto->precioVenta;
         $venta->metodo_pago = $request->metodo_pago;
         $venta->save();
 
@@ -70,6 +70,14 @@ class VentaController extends Controller
 
         return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
     }
+
+    public function show($id)
+    {
+        $venta = Venta::find($id);
+
+        return view('ventas.show', compact('venta'));
+    }
+
 
     public function exportarPDF($id)
 {
