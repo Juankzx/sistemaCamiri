@@ -2,26 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DetalleVenta;
 
 class Venta extends Model
 {
-    use HasFactory;
+    protected $table = 'ventas';
 
-    protected $fillable = [
-        'producto_id',
-        'user_id',
-        'proveedor_id',
-        'cantidad',
-        'precio',
-        'metodo_pago',
-    ];
+    protected $fillable = ['user_id', 'proveedor_id', 'total'];
 
-    public function producto()
-    {
-        return $this->belongsTo(Producto::class);
-    }
 
     public function user()
     {
@@ -32,4 +21,10 @@ class Venta extends Model
     {
         return $this->belongsTo(Proveedor::class);
     }
+
+    public function detallesVentas()
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
 }
+

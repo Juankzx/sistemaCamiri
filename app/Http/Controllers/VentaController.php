@@ -7,88 +7,115 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Models\Venta;
+use App\Models\DB;
 use App\Models\Producto;
 use App\Models\User;
 use Dompdf\Dompdf;
+use App\Models\DetalleVenta;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class VentaController extends Controller
 {
     public function index()
     {
+        // Lógica para mostrar todas las ventas
         $ventas = Venta::all();
         return view('ventas.index', compact('ventas'));
     }
 
     public function create()
     {
-        $productos = Producto::all();
-        $users = User::all();
+        // Lógica para mostrar el formulario de creación de una nueva venta
         $proveedores = Proveedor::all();
+        $productos = Producto::all();
 
-        return view('ventas.create', compact('productos', 'users', 'proveedores'));
+        return view('ventas.create', compact('proveedores', 'productos'));
     }
 
     public function store(Request $request)
     {
+        // Validación de los datos del formulario
         $validator = Validator::make($request->all(), [
-            'producto_id' => 'required|exists:productos,id',
-            'user_id' => 'required|exists:users,id',
-            'proveedor_id' => 'required|exists:proveedores,id',
-            'cantidad' => 'required|integer|min:1',
-            'precio' => 'required|numeric|min:0',
-            'metodo_pago' => 'required|string',
-        ], [], [
-            'producto_id' => 'ID del producto',
-            'user_id' => 'ID del usuario',
-            'proveedor_id' => 'ID del proveedor',
-            'cantidad' => 'cantidad',
-            'precio' => 'precio',
-            'metodo_pago' => 'método de pago',
+            'proveedor_id' => 'required',
+            'total' => 'required|numeric',
+            'cantidades.*' => ['required', 'integer', function ($attribute, $value, $fail) use ($request) {
+                // Obtener el índice del valor actual
+                $index = str_replace('cantidades.', '', $attribute);
+    
+                // Verificar si la cantidad vendida es mayor al stock disponible
+                $producto = Producto::find($request->productos[$index]);
+                $stockDisponible = $producto->cantidad;
+    
+                if ($value > $stockDisponible) {
+                    // Mostrar una alerta de error
+                    Alert::error('Error', "La cantidad vendida para el producto '{$producto->nombre}' supera el stock disponible.");
+                    $fail("La cantidad vendida para el producto '{$producto->nombre}' supera el stock disponible.");
+                }
+            }],
         ]);
-
+    
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        $producto = Producto::findOrFail($request->producto_id);
-
-        if ($request->cantidad > $producto->cantidad) {
-            return redirect()->back()->with('error', 'La cantidad solicitada excede el stock disponible.');
+    
+        // Creación de una nueva venta
+        $venta = Venta::create([
+            'user_id' => Auth::id(),
+            'proveedor_id' => $request->proveedor_id,
+            'total' => $request->total,
+        ]);
+    
+        // Lógica para guardar los detalles de la venta
+        $productos = $request->input('productos');
+        $cantidades = $request->input('cantidades');
+        $preciosUnitarios = $request->input('precios_unitarios');
+    
+        if (!empty($productos) && count($productos) === count($cantidades) && count($productos) === count($preciosUnitarios)) {
+            for ($i = 0; $i < count($productos); $i++) {
+                DetalleVenta::create([
+                    'venta_id' => $venta->id,
+                    'producto_id' => $productos[$i],
+                    'cantidad' => $cantidades[$i],
+                    'precio_unitario' => $preciosUnitarios[$i],
+                ]);
+    
+                // Actualizar el stock del producto
+                $producto = Producto::find($productos[$i]);
+                $producto->cantidad -= $cantidades[$i];
+                $producto->save();
+            }
         }
-
-        $venta = new Venta();
-        $venta->producto_id = $request->producto_id;
-        $venta->user_id = $request->user_id;
-        $venta->proveedor_id = $request->proveedor_id;
-        $venta->cantidad = $request->cantidad;
-        $venta->precio = $producto->precioVenta;
-        $venta->metodo_pago = $request->metodo_pago;
-        $venta->save();
-
-        $producto->cantidad -= $request->cantidad;
-        $producto->save();
-
+    
+        // Redireccionar o mostrar un mensaje de éxito
         return redirect()->route('ventas.index')->with('success', 'La venta se ha registrado correctamente.');
     }
 
+
+    // Otros métodos del controlador como show(), edit(), update(), delete(), etc.
     public function show($id)
     {
-        $venta = Venta::find($id);
+        $venta = Venta::with('detallesVentas.producto')->findOrFail($id);
 
         return view('ventas.show', compact('venta'));
     }
-
-
-    public function exportarPDF($id)
-{
-    $venta = Venta::find($id);
-
-    if (!$venta) {
-        return redirect()->back()->with('error', 'La venta no existe.');
+    public function destroy(Venta $venta)
+    {
+        $venta->delete();
+        return redirect()->route("ventas.index")
+            ->with("mensaje", "Venta eliminada");
     }
 
-    // Generar el contenido del PDF utilizando los datos de la venta
-    $contenidoPDF = '
+    public function exportarPDF($id)
+    {
+        $venta = Venta::find($id);
+
+        if (!$venta) {
+            return redirect()->back()->with('error', 'La venta no existe.');
+        }
+
+        // Generar el contenido del PDF utilizando los datos de la venta
+        $contenidoPDF = '
         <div style="font-family: monospace; font-size: 12px;">
             <h1 style="text-align: center;">Boleta de Venta</h1>
             <p><strong>ID:</strong> ' . $venta->id . '</p>
@@ -108,14 +135,14 @@ class VentaController extends Controller
         </div>
     ';
 
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml($contenidoPDF);
-    $dompdf->setPaper('A7', 'portrait'); // Ajustar el tamaño del papel a A7 para impresión térmica
-    $dompdf->set_option('isRemoteEnabled', true);
-    $dompdf->render();
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($contenidoPDF);
+        $dompdf->setPaper('A7', 'portrait'); // Ajustar el tamaño del papel a A7 para impresión térmica
+        $dompdf->set_option('isRemoteEnabled', true);
+        $dompdf->render();
 
-    $output = $dompdf->output();
-    return response($output)->header('Content-Type', 'application/pdf');
-}
+        $output = $dompdf->output();
+        return response($output)->header('Content-Type', 'application/pdf');
+    }
 
 }

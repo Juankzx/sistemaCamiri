@@ -43,7 +43,7 @@
                     <td>{{ $venta->id }}</td>
                     <td>{{ $venta->created_at }}</td>
                     <td>{{ $venta->proveedor->nombre }}</td>
-                    <td>${{ $venta->precio }}</td>
+                    <td>${{ $venta->total }}</td>
                     
                         <td>
                                 <a class="btn btn-sm btn-primary" href="{{ route('ventas.show',$venta->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __() }}</a>
