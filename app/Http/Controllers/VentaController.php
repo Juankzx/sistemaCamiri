@@ -109,6 +109,7 @@ class VentaController extends Controller
     public function exportarPDF($id)
     {
         $venta = Venta::find($id);
+        $detalle = DetalleVenta::find($id);
 
         if (!$venta) {
             return redirect()->back()->with('error', 'La venta no existe.');
@@ -119,12 +120,12 @@ class VentaController extends Controller
         <div style="font-family: monospace; font-size: 12px;">
             <h1 style="text-align: center;">Boleta de Venta</h1>
             <p><strong>ID:</strong> ' . $venta->id . '</p>
-            <p><strong>Producto:</strong> ' . $venta->producto->nombre . '</p>
+            <p><strong>Producto:</strong> ' . $detalle->producto->nombre . '</p>
             <p><strong>Usuario:</strong> ' . $venta->user->name . '</p>
             <p><strong>Proveedor:</strong> ' . $venta->proveedor->nombre . '</p>
-            <p><strong>Cantidad:</strong> ' . $venta->cantidad . '</p>
-            <p><strong>Precio:</strong> ' . $venta->precio . '</p>
-            <p><strong>Método de Pago:</strong> ' . $venta->metodo_pago . '</p>
+            <p><strong>Cantidad:</strong> ' . $detalle->cantidad . '</p>
+            <p><strong>Precio:</strong> ' . $venta->total . '</p>
+            
             <p><strong>Fecha:</strong> ' . $venta->created_at . '</p>
             <hr style="border: 1px dashed;">
             <p style="text-align: center;">¡Gracias por su compra!</p>

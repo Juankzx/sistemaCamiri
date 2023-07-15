@@ -344,6 +344,11 @@ return [
             'text' => 'Proveedores',
             'url' => 'proveedores',
             'icon' => 'fas fa-users',
+        ]
+        ,[
+            'text' => 'Cajas',
+            'url' => 'cajas',
+            'icon' => 'fas fa-money-check',
         ],
 
     ],

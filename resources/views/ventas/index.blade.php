@@ -30,6 +30,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Usuario</th>
                 <th>Fecha</th>
                 <th>Cliente</th>
                 <th>Total</th>
@@ -41,6 +42,7 @@
             @foreach ($ventas as $venta)
                 <tr>
                     <td>{{ $venta->id }}</td>
+                    <td>{{ $venta->user->name ?? '' }}</td> 
                     <td>{{ $venta->created_at }}</td>
                     <td>{{ $venta->proveedor->nombre }}</td>
                     <td>${{ $venta->total }}</td>
