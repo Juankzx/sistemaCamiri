@@ -315,7 +315,7 @@ return [
             'text' => 'Tablero',
             'url' => 'home',
             'icon' => 'far fa-fw fas fa-tachometer-alt',
-            'label' => 5,
+            'label' => 6,
             'label_color' => 'success',
         ],
         
@@ -350,7 +350,6 @@ return [
             'url' => 'cajas',
             'icon' => 'fas fa-money-check',
         ],
-
     ],
 
     /*

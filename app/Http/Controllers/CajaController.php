@@ -10,11 +10,33 @@ use Illuminate\Support\Facades\Auth;
 
 class CajaController extends Controller
 {
-    public function index()
-    {
-        $cajas = Caja::all();
-        return view('caja.index', compact('cajas'));
+    public function index(Request $request)
+{
+    // Obtener todas las cajas
+    $cajas = Caja::all();
+
+    // Crear una instancia de consulta
+    $query = Caja::query();
+
+    // Obtener los valores de los filtros de fechas
+    $fechaInicio = $request->input('fecha_inicio');
+    $fechaCierre = $request->input('fecha_cierre');
+
+    // Aplicar filtros de fechas si se proporcionan
+    if ($fechaInicio) {
+        $query->whereDate('fecha_apertura', '>=', $fechaInicio);
     }
+
+    if ($fechaCierre) {
+        $query->whereDate('fecha_cierre', '<=', $fechaCierre);
+    }
+
+    // Obtener las cajas filtradas
+    $cajas = $query->get();
+
+    return view('caja.index', compact('cajas'));
+}
+
 
     public function create()
     {

@@ -117,24 +117,47 @@ class VentaController extends Controller
 
         // Generar el contenido del PDF utilizando los datos de la venta
         $contenidoPDF = '
-        <div style="font-family: monospace; font-size: 12px;">
-            <h1 style="text-align: center;">Boleta de Venta</h1>
-            <p><strong>ID:</strong> ' . $venta->id . '</p>
-            <p><strong>Producto:</strong> ' . $detalle->producto->nombre . '</p>
-            <p><strong>Usuario:</strong> ' . $venta->user->name . '</p>
-            <p><strong>Proveedor:</strong> ' . $venta->proveedor->nombre . '</p>
-            <p><strong>Cantidad:</strong> ' . $detalle->cantidad . '</p>
-            <p><strong>Precio:</strong> ' . $venta->total . '</p>
-            
-            <p><strong>Fecha:</strong> ' . $venta->created_at . '</p>
-            <hr style="border: 1px dashed;">
-            <p style="text-align: center;">¡Gracias por su compra!</p>
-            <br>
-            <br> <!-- Agrega espacio en blanco con elementos de salto de línea (<br>) -->
-            <hr style="border: 1px dashed;">
-            
-        </div>
-    ';
+    <div style="font-family: monospace; font-size: 12px; text-align: center;">
+        <h2>Boleta de Venta</h2>
+        <p>ID: ' . $venta->id . '</p>
+        <p>Usuario: ' . $venta->user->name . '</p>
+        <p>Proveedor: ' . $venta->proveedor->nombre . '</p>
+        <hr style="border: 1px dashed;">';
+
+$contadorProductos = count($venta->detallesVentas);
+$contenidoPDF .= '
+        <p>Cantidad de Productos: ' . $contadorProductos . '</p>';
+
+$contenidoPDF .= '
+        <table style="margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th>PROD</th>
+                    <th>CANT</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+foreach ($venta->detallesVentas as $detalle) {
+    $contenidoPDF .= '
+                <tr>
+                    <td>' . $detalle->producto->nombre . '</td>
+                    <td>' . $detalle->cantidad . '</td>
+                    <td>$' . $detalle->precio_unitario * $detalle->cantidad . '</td>
+                </tr>';
+}
+
+$contenidoPDF .= '
+            </tbody>
+        </table>
+
+        <p>Fecha: ' . $venta->created_at . '</p>
+        <p>Total: $' . $venta->total . '</p>
+        <p>¡Gracias por su compra!</p>
+        <hr style="border: 1px dashed;">
+    </div>
+';
 
         $dompdf = new Dompdf();
         $dompdf->loadHtml($contenidoPDF);

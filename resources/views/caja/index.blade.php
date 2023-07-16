@@ -2,6 +2,29 @@
 
 @section('content')
     <h1>Cajas</h1>
+    <div class="row mb-3">
+        <div class="col-md-4">
+          <form action="{{ route('cajas.index') }}" method="GET">
+            <div class="input-group">
+              <input type="date" name="fecha_inicio" class="form-control" placeholder="Fecha inicio">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <form action="{{ route('cajas.index') }}" method="GET">
+            <div class="input-group">
+              <input type="date" name="fecha_cierre" class="form-control" placeholder="Fecha cierre">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
     <a href="{{ route('cajas.create') }}" class="btn btn-primary">Abrir Caja</a>
     <table class="table">
         <thead>
