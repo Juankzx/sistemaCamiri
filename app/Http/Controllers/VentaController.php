@@ -17,12 +17,24 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class VentaController extends Controller
 {
-    public function index()
-    {
-        // Lógica para mostrar todas las ventas
-        $ventas = Venta::all();
-        return view('ventas.index', compact('ventas'));
+    public function index(Request $request)
+{
+    // Crear una instancia de consulta
+    $query = Venta::query();
+
+    // Obtener el valor del filtro de fecha
+    $fecha = $request->input('fecha');
+
+    // Aplicar el filtro de fecha si se proporciona
+    if ($fecha) {
+        $query->whereDate('created_at', $fecha);
     }
+
+    // Obtener las ventas filtradas
+    $ventas = $query->get();
+
+    return view('ventas.index', compact('ventas'));
+}
 
     public function create()
     {

@@ -20,6 +20,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nombre</th>
                                     <th>Dirección</th>
                                     <th>Teléfono</th>
@@ -31,6 +32,7 @@
                             <tbody>
                                 @foreach ($proveedores as $proveedor)
                                     <tr>
+                                        <td>{{ $proveedor->id }}</td>
                                         <td>{{ $proveedor->nombre }}</td>
                                         <td>{{ $proveedor->direccion }}</td>
                                         <td>{{ $proveedor->telefono }}</td>
@@ -51,12 +53,4 @@
         </div>
     </div>
 @endsection
-
-@section('css')
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-@stop
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-@stop
 

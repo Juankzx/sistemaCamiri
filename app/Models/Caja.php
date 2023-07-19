@@ -12,6 +12,7 @@ class Caja extends Model
         'fecha_cierre',
         'monto_apertura',
         'monto_cierre',
+        'cerrada',
 
     ];
 

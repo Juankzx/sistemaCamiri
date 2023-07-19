@@ -20,6 +20,7 @@ class CreateCajasTable extends Migration
             $table->timestamp('fecha_cierre')->nullable();
             $table->decimal('monto_apertura', 8, 2)->nullable();
             $table->decimal('monto_cierre', 8, 2)->nullable();
+            $table->boolean('cerrada')->default(false); // Nuevo campo 'cerrada'
             $table->timestamps();
         });
     }

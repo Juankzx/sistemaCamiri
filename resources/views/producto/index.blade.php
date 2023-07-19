@@ -60,10 +60,8 @@
 											<td>${{ $producto->precioVenta }}</td>
                                             <td>${{ $producto->ganancia }}</td>
                                             <td>
-                                                <span
-                                                    class="right badge badge-{{ $producto->estado ? 'success' : 'danger' }}">{{$producto->estado ? 'Activo' : 'Inactivo'}}</span>
+                                                <span class="right badge badge-{{ $producto->estado ? 'success' : 'danger' }}">{{$producto->estado ? 'Activo' : 'Inactivo'}}</span>
                                             </td>
-
                                             <td>
                                                 <form action="{{ route('productos.destroy',$producto->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('productos.show',$producto->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __() }}</a>

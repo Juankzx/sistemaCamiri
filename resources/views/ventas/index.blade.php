@@ -25,15 +25,14 @@
     </div>
 @endif
 
-<!-- Formulario de búsqueda por fecha -->
 <form action="{{ route('ventas.index') }}" method="GET">
     <div class="form-row">
         <div class="col-md-4 mb-3">
             <label for="fecha">Fecha</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ request('fecha') }}" >
+            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ request('fecha') }}">
         </div>
         <div class="col-md-4 mb-3" style="margin-top: 32px">
-            <button type="submit" class="btn btn-primary" posi>Buscar</button>
+            <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
     </div>
 </form>
@@ -69,12 +68,3 @@
     </tbody>
 </table>
 @endsection
-
-@section('css')
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-@stop
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-@stop
-

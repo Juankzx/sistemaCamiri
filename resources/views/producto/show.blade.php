@@ -13,7 +13,7 @@
                         <div class="float-left">
                             <span class="card-title">{{ __('Ver') }} Producto #{{ ($producto->id) }}</span>
                         </div>
-                        <div class="float-right">
+                        <div class="float-right" >
                             <a class="btn btn-primary" href="{{ route('productos.index') }}"> {{ __('< Volver') }}</a>
                         </div>
                     </div>

@@ -24,8 +24,10 @@
           </form>
         </div>
       </div>
-      
+     <div> 
     <a href="{{ route('cajas.create') }}" class="btn btn-primary">Abrir Caja</a>
+  </div>
+  <br>
     <table class="table">
         <thead>
             <tr>
@@ -35,6 +37,7 @@
                 <th>Monto Apertura</th>
                 <th>Monto Cierre</th>
                 <th>Usuario</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -46,11 +49,26 @@
                     <td>{{ $caja->fecha_cierre }}</td>
                     <td>${{ $caja->monto_apertura }}</td>
                     <td>${{ $caja->monto_cierre }}</td>
-                    <td>{{ $caja->user->name ?? '' }}</td>  
+                    <td>{{ $caja->user->name ?? '' }}</td>   
                     <td>
-                        <a href="{{ route('cajas.apertura', $caja) }}" class="btn btn-primary">Abrir</a>
-                        <a href="{{ route('cajas.cierre', $caja) }}" class="btn btn-danger">Cerrar</a>
+                        <span class="right badge badge-{{ $caja->cerrada ? 'danger' : 'success' }}">{{$caja->cerrada ? 'Cerrada' : 'Abierta'}}</span><!-- Estado de la caja -->
                     </td>
+                    <td>
+                      @if($caja->cerrada)
+                          <!-- La caja está cerrada -->
+                          <span class="text-muted"><a href="{{ route('cajas.show', $caja->id) }}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-eye"></i></a></span>
+                      @else
+                          <!-- La caja está abierta -->
+                          <a href="{{ route('cajas.apertura', $caja) }}" class="btn btn-primary">Abrir</a>
+                          <a href="{{ route('cajas.cierre', $caja) }}" class="btn btn-danger">Cerrar</a>
+                      @endif
+                  </td>
+                  <td>
+                    @if($caja->cerrada)
+                        <!-- Mostrar el enlace solo si la caja está abierta -->
+                        
+                    @endif
+                </td>
                 </tr>
             @endforeach
         </tbody>

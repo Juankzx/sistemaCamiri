@@ -35,22 +35,18 @@ Route::resource('cajas', App\Http\Controllers\CajaController::class)->middleware
 Route::group(['prefix' => 'cajas'], function () {
     // Ruta para mostrar el formulario de apertura de caja
     Route::get('/apertura', 'CajaController@apertura')->name('cajas.apertura')->middleware('auth');
-    
     // Ruta para procesar el formulario de apertura de caja
     Route::post('/abrir', 'CajaController@abrir')->name('cajas.abrir')->middleware('auth');
-    
     // Ruta para mostrar el formulario de cierre de caja
     Route::get('/cierre/{id}', [CajaController::class, 'cierre'])->name('cajas.cierre')->middleware('auth');
+    Route::post('/cerrar', [CajaController::class, 'cerrar'])->name('cajas.cerrar')->middleware('auth');
+    // Ruta para mostrar el detalle de cada caja
     
-    // Ruta para procesar el formulario de cierre de caja
-    Route::post('/cerrar', 'CajaController@cerrar')->name('cajas.cerrar')->middleware('auth');
     
-    // Ruta para mostrar el balance de la caja
-    Route::get('/balance', 'CajaController@balance')->name('cajas.balance')->middleware('auth');
+
 });
 
-
-
+Route::get('/ventas/fecha/{fecha}', 'App\Http\Controllers\VentaController@ventasPorFecha')->name('ventas.fecha');
 Route::get('/ventas/{id}/exportar-pdf', 'App\Http\Controllers\VentaController@exportarPDF')->name('ventas.exportar.pdf');
 
 
